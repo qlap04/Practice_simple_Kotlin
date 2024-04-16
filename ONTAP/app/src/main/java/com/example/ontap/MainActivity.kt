@@ -24,12 +24,17 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.ontap.ui.theme.ONTAPTheme
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,6 +65,14 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun UnitConverter()
 {
+    var inputValue by remember { mutableStateOf("") }
+    var outputValue by remember { mutableStateOf("") }
+    var inputUnit by remember { mutableStateOf("Centimeters") }
+    var outputUnit by remember { mutableStateOf("Meters") }
+    var IExpand by remember { mutableStateOf(false) }  // Sửa thành Boolean
+    var oExpand by remember { mutableStateOf(false) }  // Sửa thành Boolean
+    var conversion by remember { mutableStateOf(0.01) }  // Sửa thành Double
+
     Column (
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -68,7 +81,12 @@ fun UnitConverter()
 
         Text(text = "QLAPtext")
         Spacer(Modifier.height(15.dp))
-        OutlinedTextField(value = " ", onValueChange = {})
+        OutlinedTextField(
+            value = inputValue,
+            onValueChange = { newValue -> inputValue = newValue },
+            label = { Text(text = "Enter Value")}
+        )
+        Spacer(Modifier.height(15.dp))
         Spacer(Modifier.height(15.dp))
         Row {
              Box{
@@ -77,7 +95,7 @@ fun UnitConverter()
                     Icon(Icons.Default.ArrowDropDown,
                         contentDescription = "ArrowDown")
                     }
-                 DropdownMenu(expanded = true, onDismissRequest = { /*TODO*/ }) {
+                 DropdownMenu(expanded = false, onDismissRequest = { /*TODO*/ }) {
                      DropdownMenuItem(text = {Text("centimeters")}, onClick = { /*TODO*/ })
                      DropdownMenuItem(text = {Text("Meters")}, onClick = { /*TODO*/ })
                      DropdownMenuItem(text = {Text("Kilometers")}, onClick = { /*TODO*/ })
@@ -93,7 +111,7 @@ fun UnitConverter()
                         contentDescription = "ArrowDown"
                     )
                 }
-                DropdownMenu(expanded = true, onDismissRequest = { /*TODO*/ }) {
+                DropdownMenu(expanded = false, onDismissRequest = { /*TODO*/ }) {
                     DropdownMenuItem(text = {Text("centimeters")}, onClick = { /*TODO*/ })
                     DropdownMenuItem(text = {Text("Meters")}, onClick = { /*TODO*/ })
                     DropdownMenuItem(text = {Text("Kilometers")}, onClick = { /*TODO*/ })
